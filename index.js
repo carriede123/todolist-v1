@@ -9,11 +9,11 @@ const date = require(__dirname + "/date.js");
 const app = express();
 
 // set an array for the default items in the list
-let items = ["Buy Food", "Prepare Food", "Cook Food", "Eat Food"];
+let items = [""];
 // set an empty array for new work items
-let workItems = ["Show Up", "Get Settled"];
+let weekdayItems = ["Go to school", "Grab the kids"];
 //create new array for fun items
-let funItems = ["Buy a Ferrari", "Drink a Beer", "Climb a Tree"]
+let weekendItems = ["Go to the bar", "Have a drink"]
 
 // set EJS as the viewing engine to display html
 app.set('view engine', 'ejs');
@@ -43,15 +43,15 @@ app.post("/", function(req, res) {
     // code allows items to be added to the regular list and work list
     let item = req.body.newItem;
     
-    //if route is /work, add to work list
-    if (req.body.list === "Work") {
-        workItems.push(item);
-        res.redirect("/work");
+    //if route is /weekday, add to weekday list
+    if (req.body.list === "Weekday") {
+        weekdayItems.push(item);
+        res.redirect("/weekday");
     } 
-    //if route is /fun, add to fun list
-    else if (req.body.list === "Fun") {
-        funItems.push(item);
-        res.redirect("/fun");
+    //if route is /weekend, add to fun list
+    else if (req.body.list === "Weekend") {
+        weekendItems.push(item);
+        res.redirect("/weekend");
     } 
     else {
         items.push(item);
@@ -61,12 +61,12 @@ app.post("/", function(req, res) {
     
 
 // display default to do list on the localhost:3000/work route!
-app.get("/work", function(req, res){
-    res.render("list", {listTitle: "Work To Do List", newListItems: workItems})
+app.get("/weekday", function(req, res){
+    res.render("list", {listTitle: "Weekday List", newListItems: weekdayItems})
 });
 // display default to do list on the localhost:3000/fun route!
-app.get("/fun", function(req, res){
-    res.render("list", {listTitle: "Let's Have Some Fun List", newListItems: funItems})
+app.get("/weekend", function(req, res){
+    res.render("list", {listTitle: "Weekend List", newListItems: weekendItems})
 });
 
 app.listen(3000, function() {
